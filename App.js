@@ -2,14 +2,18 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import * as firebase from 'firebase';
 
-
 import MemoListScreen from './src/screens/MemoListScreen';
 import MemoDetailScreen from './src/screens/MemoDetailScreen';
 import MemoEditScreen from './src/screens/MemoEditScreen';
+import MemoCreateScreen from './src/screens/MemoCreateScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import SignupScreen from './src/screens/SignupScreen';
 
 import ENV from './env.json';
+
+
+//  eslint-disable-next-line
+require("firebase/firestore");
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 var config = {
@@ -30,6 +34,7 @@ const App = createStackNavigator({
   Home:      { screen: MemoListScreen },
   MemoDetail:{ screen: MemoDetailScreen },
   MemoEdit:  { screen: MemoEditScreen },
+  MemoCreate:{ screen: MemoCreateScreen },
   },
    {
     defaultNavigationOptions: {
