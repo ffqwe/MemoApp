@@ -1,14 +1,51 @@
 import React from 'react';
 import { StyleSheet, View, TextInput } from 'react-native';
 
+import firebase from 'firebase';
+
 import CircleButton from '../elements/CircleButton';
 
 class MemoEditScreen extends React.Component {
+  state = {
+    body: '',
+    Key: '',      //コンポーネントでMemoDetailScreenで渡されてきた内容をstateで受け取る
+  }
+
+  componentDidMount(){
+    console.log(this.props.navigation.state.params);
+    const { params } = this.props.navigation.state;
+    this.setState({
+      body: params.memo.body,
+      key: params.memo.key
+    });  //読み込みの最初にsetStateでstateにメモ内容を渡す
+  }
+
+  handlePress() {
+    const db = firebase.firestore();
+    const { currentUser } = firebase.auth(); //currentUserはfirebaseから取得可　uidを抜き取る
+    const newDate = firebase.firestore.Timestamp.now();
+    const docRef = db.collection(`users/${currentUser.uid}/memos`).doc(this.state.key)　// メモのコレクションの参照　.docは単体のメモの参照が取れる
+                     .update({
+                       body: this.state.body,
+                     })
+                     .then(() => {
+                       console.log('success!');
+                     })
+                     .catch((error) => {
+                       console.log(error);
+                     });
+  }
+
   render(){
     return(
       <View style={styles.container}>
-        <TextInput style={styles.memoEditInput} multiline value='Hi' />
-        <CircleButton name="check" onPress={() => { this.props.navigation.goBack(); }} />
+        <TextInput
+        style={styles.memoEditInput}
+        multiline
+        value={this.state.body}
+        onChangeText={(text) => { this.setState({ body: text }); }}
+        />
+        <CircleButton name="check" onPress={this.handlePress.bind(this)}/>
       </View>
     );
   }

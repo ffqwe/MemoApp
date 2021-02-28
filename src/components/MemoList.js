@@ -1,15 +1,23 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, FlatList } from 'react-native';
 
+const dateString = (date) => {
+  // 存在しない場合は空文字列を返すと安全です
+  if (date == null) { return ''; }
+  // firebaseのTimestamp型をDate型に変換する
+  const dateObject = date.toDate();
+  // Dateオブジェクトを文字列に変換する
+  return dateObject.toISOString().split('T')[0];
+};
 
 class MemoList extends React.Component{
   renderMemo({ item }) {
     console.log(item);
     return (
-      <TouchableHighlight onPress={() => { this.props.navigation.navigate('MemoDetail'); }}>
+      <TouchableHighlight onPress={() => { this.props.navigation.navigate('MemoDetail', { memo: item }); }}>
         <View style={styles.memoListItem}>
-         <Text style={styles.memoTitle}>{item.body}</Text>
-         <Text style={styles.memoDate}>2020/10/10</Text>
+         <Text style={styles.memoTitle}>{item.body.substring(0,10)}</Text>
+         <Text style={styles.memoDate}>{dateString(item.createdOn)}</Text>
         </View>
       </TouchableHighlight>
     );
