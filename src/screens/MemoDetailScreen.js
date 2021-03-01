@@ -24,32 +24,38 @@ class MemoDetailScreen extends React.Component {
     this.setState({ memo: params.memo });  //stateはsetstateで変更する　navigationで渡ってきた値を空のstateに上書きした
   }
 
-  render(){
+  returnMemo(memo){
+    this.setState({ memo });
+  }
+
+  render() {
     const { memo } = this.state;
-    const { body, createdOn } = memo;
-    return(
+    if (memo == null) { return null; }
+
+    return (
       <View style={styles.container}>
-        <View>
+
           <View style={styles.memoHeader}>
-            <View>
-              <Text style={styles.memoHeaderTitle}>{memo.body ? memo.body.substring(0, 10) : ''}</Text>
-              {createdOn && <Text style={styles.memoHeaderDate}>{dateString(memo.createdOn)}</Text>}
-            </View>
+          <View>
+            <Text style={styles.memoHeaderTitle}>{memo.body ? memo.body.substring(0, 10) : ''}</Text>
+            <Text style={styles.memoHeaderDate}>{dateString(memo.createdon)}</Text>
           </View>
         </View>
 
+
         <View style={styles.memoContent}>
           <Text style={styles.memoBody}>
-            {memo.body}
+           {memo.body}
           </Text>
         </View>
 
         <CircleButton
-          name="pencil"　
-          color= "white"
-          style={styles.editButton}
-          onPress={() => { this.props.navigation.navigate('MemoEdit', { memo }); }} //MemoEditにmemoの内容を受け渡す
+        name="pencil"
+        color="white"
+        style={styles.editButton}
+        onPress={() => { this.props.navigation.navigate('MemoEdit', { memo, returnMemo: this.returnMemo.bind(this) }); }}
         />
+
       </View>
     );
   }

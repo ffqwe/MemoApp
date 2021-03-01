@@ -12,12 +12,11 @@ class MemoEditScreen extends React.Component {
   }
 
   componentDidMount(){
-    console.log(this.props.navigation.state.params);
     const { params } = this.props.navigation.state;
     this.setState({
       body: params.memo.body,
-      key: params.memo.key
-    });  //読み込みの最初にsetStateでstateにメモ内容を渡す
+      key: params.memo.key,
+    });  //MemoDetailScreenから読み込みの最初にsetStateでstateにメモ内容を渡す
   }
 
   handlePress() {
@@ -27,9 +26,16 @@ class MemoEditScreen extends React.Component {
     const docRef = db.collection(`users/${currentUser.uid}/memos`).doc(this.state.key)　// メモのコレクションの参照　.docは単体のメモの参照が取れる
                      .update({
                        body: this.state.body,
+                       createdOn: newDate,
                      })
                      .then(() => {
-                       console.log('success!');
+                       const { navigation } = this.props;
+                       navigation.state.params.returnMemo({
+                         body: this.state.body,
+                         Key: this.state.Key,
+                         createdOn: newDate,
+                       });
+                       this.props.navigation.goBack();                 //goBackメソッドで戻る
                      })
                      .catch((error) => {
                        console.log(error);
@@ -45,7 +51,10 @@ class MemoEditScreen extends React.Component {
         value={this.state.body}
         onChangeText={(text) => { this.setState({ body: text }); }}
         />
-        <CircleButton name="check" onPress={this.handlePress.bind(this)}/>
+        <CircleButton
+        name="check"
+        onPress={this.handlePress.bind(this)}
+        />
       </View>
     );
   }
