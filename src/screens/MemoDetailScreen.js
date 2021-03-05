@@ -20,7 +20,6 @@ class MemoDetailScreen extends React.Component {
 
   componentDidMount(){
     const { params } = this.props.navigation.state;
-    console.log(params);
     this.setState({ memo: params.memo });  //stateはsetstateで変更する　navigationで渡ってきた値を空のstateに上書きした
   }
 
@@ -38,7 +37,7 @@ class MemoDetailScreen extends React.Component {
           <View style={styles.memoHeader}>
           <View>
             <Text style={styles.memoHeaderTitle}>{memo.body ? memo.body.substring(0, 10) : ''}</Text>
-            <Text style={styles.memoHeaderDate}>{dateString(memo.createdon)}</Text>
+            <Text style={styles.memoHeaderDate}>{dateString(memo.createdOn)}</Text>
           </View>
         </View>
 

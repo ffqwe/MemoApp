@@ -24,19 +24,6 @@ class MemoListScreen extends React.Component{
           });
           this.setState({ memoList: memoList }); //左辺のmemoListはstateで定義したもの、右辺は.thenで定義したもの setStateで渡されたものを保存する
         });
-      /*
-        .get()
-        .then((snapshot) => {
-          const memoList = [];
-          snapshot.forEach((doc) => {
-            memoList.push({ ...doc.data(), key: doc.id }); //...doc.date()にはbodyとcreatedOnが入っている。それとKeyを渡すことが可
-          });
-            this.setState({ memoList: memoList }); //左辺のmemoListはstateで定義したもの、右辺は.thenで定義したもの
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-        */
   }
 
   handlePress() {
