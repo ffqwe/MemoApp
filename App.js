@@ -1,6 +1,7 @@
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import * as firebase from 'firebase';
+import { Platform } from 'react-native';
 
 import MemoListScreen from './src/screens/MemoListScreen';
 import MemoDetailScreen from './src/screens/MemoDetailScreen';
@@ -35,20 +36,28 @@ const App = createStackNavigator({
   MemoDetail:{ screen: MemoDetailScreen },
   MemoEdit:  { screen: MemoEditScreen },
   MemoCreate:{ screen: MemoCreateScreen },
-  },
-   {
+  },{
     defaultNavigationOptions: {
       headerTitle: 'Memot',
       headerTintColor: '#fff',
       headerBackTitleVisible: null,
-      headerStyle:{
+      headerStyle: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 2,
         backgroundColor: '#265366',
+        ...Platform.select({
+          android: {
+            height: 80,
+            paddingTop: 20,
+          },
+        }),
       },
       headerTitleStyle:{
         color: '#fff',
-       },
       },
-    }
-);
+    },
+  });
 
 export default createAppContainer(App);

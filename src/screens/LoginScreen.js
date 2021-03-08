@@ -44,6 +44,7 @@ handlePress(){
           autoCapitalize="none"
           autoCorrect= {false}
           placeholder="Email Address"
+          underLineColorAndroid= "transparent"
         />
         <TextInput
         style={styles.input}
@@ -53,6 +54,7 @@ handlePress(){
         autoCorrect= {false}
         placeholder="Password"
         secureTextEntry
+        underLineColorAndroid= "transparent"
         />
 
         <TouchableHighlight style={styles.button} onPress={this.handleSubmit.bind(this)} underlayColor="#C70F66">

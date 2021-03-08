@@ -49,6 +49,8 @@ class MemoEditScreen extends React.Component {
         multiline
         value={this.state.body}
         onChangeText={(text) => { this.setState({ body: text }); }}
+        underLineColorAndroid= "transparent"
+        textAlignVertical="top" //Androidだけに有効
         />
         <CircleButton
         name="check"
