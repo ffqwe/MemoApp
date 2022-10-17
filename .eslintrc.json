@@ -1,0 +1,16 @@
+{
+ "extend": "airbnb",
+ "plugins": [
+   "react",
+   "jsx-a11y",
+   "import"
+ ],
+ "rules":{
+   "key-spacing": 0,
+   "react-jsx-no-bind": 0
+
+ },
+
+
+ "parser": "babel-eslint"
+}
